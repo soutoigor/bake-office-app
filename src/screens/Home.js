@@ -1,91 +1,147 @@
 import React from 'react'
-import { StyleSheet } from 'react-native'
+import { 
+  StyleSheet, 
+  Dimensions,
+  Image,
+} from 'react-native'
 import { 
   Container, 
-  Content, 
   Text, 
   Card,
   CardItem,
   Body,
   Icon,
+  View,
 } from 'native-base'
 import { Actions } from 'react-native-router-flux'
 
 const Home = () => {
+  const window = Dimensions.get('window')
+
   return ( 
     <Container
-      class={ styles.cardItems }              
+      style={ HomeStyle.container }  
     >
-      <Content>
-          <Text>
+    <Image
+      source={ require('../../assets/bg-home.jpg') } 
+      style={{
+        flex: 1,
+        resizeMode: 'cover',
+        width: window.width,
+        height: window.height,
+        position: 'absolute',
+        justifyContent: 'center',
+       }}
+    />
+      <View>
+          <Text
+            style={ HomeStyle.title }
+          >
             Bake Office 
           </Text>
-          
+      </View>
+        <View
+          style={ HomeStyle.cardsContainer }
+        >      
           <Card
-          >
+            style={ HomeStyle.cards }
+            >
             <CardItem
               button
+              rounded
+              style={ HomeStyle.cardItem }
               onPress={ () => Actions.receiptList() }
-            >
-              <Body>
+              >
+                <Body
+                  style={ HomeStyle.cardContent }
+                >
                 <Icon type="FontAwesome" name="book" />
-                <Text>Lista de receitas</Text>
+                <Text style={ HomeStyle.cardFont }>Lista de receitas</Text>
               </Body>
             </CardItem>
           </Card>
-          <Card 
-          >
+          <Card
+            style={ HomeStyle.cards }
+            >
             <CardItem
               button
+              rounded
+              style={ HomeStyle.cardItem }
               onPress={ () => Actions.wishlist() }
-              class={ styles.cardItems }          
             >
-              <Body>
+                <Body
+                  style={ HomeStyle.cardContent }
+                >                
                 <Icon 
                   type="FontAwesome" 
                   name='history'
                   style={{ transform: [{ scaleX: -1 }] }}
                 />
-                <Text>Futuras receitas</Text>
+                <Text style={ HomeStyle.cardFont }>Futuras receitas</Text>
               </Body>
             </CardItem>
           </Card>
-          <Card 
-          >
+          <Card
+            style={ HomeStyle.cards }
+            >
             <CardItem
               button
+              rounded
+              style={ HomeStyle.cardItem }
               onPress={ () => Actions.registerReceipt() }
             >
-              <Body>
+                <Body
+                  style={ HomeStyle.cardContent }
+                >               
                 <Icon type="FontAwesome" name='edit' />
-                <Text>Criar Receita</Text>
+                <Text style={ HomeStyle.cardFont }>Criar Receita</Text>
               </Body>
             </CardItem>
           </Card>
-        </Content>
+        </View>
     </Container>
   )
 }
 
-const styles = StyleSheet.create({
+const HomeStyle = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    alignContent: 'center',
     justifyContent: 'center',
+    flexDirection: 'column',
+    backgroundColor: '#eee',
   },
-  p: {
+  title: {
+    fontSize: 40,
+    fontWeight: '600',
     color: '#fff',
-    fontSize: 30
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 2,
+    textShadowColor: '#000',
   },
-  homeBtn: {
-    width: '70vw',
-    height: '40px',
+  cardsContainer: {
+    flexDirection: 'column',
+    position: 'relative',
+    top: 40,
   },
-  cardItems: {
-    flex: 1,
+  cardContent: {
     alignItems: 'center',
-    justifyContent: 'center',
-  }
+    flexDirection: 'column',
+  },
+  cards: {
+    width: 175,
+    height: 80,
+    borderBottomLeftRadius: 15,
+    borderTopRightRadius: 15,
+    backgroundColor: 'rgba(255, 255, 255, 0.90)',
+  },
+  cardFont: {
+    fontWeight: '600',
+  },
+  cardItem: {
+    backgroundColor: 'transparent',
+  },
 })
 
 
