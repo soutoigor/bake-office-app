@@ -15,6 +15,7 @@ export default function App() {
           key="home"
           component={ Home }
           title="Home"
+          hideNavBar={ true }
           initial
         />
         <Scene
