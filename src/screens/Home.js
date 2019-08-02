@@ -56,7 +56,7 @@ const Home = () => {
                   style={ HomeStyle.cardContent }
                 >
                 <Icon type="FontAwesome" name="book" />
-                <Text style={ HomeStyle.cardFont }>Lista de receitas</Text>
+                <Text style={ HomeStyle.cardFont }>Receitas feitas</Text>
               </Body>
             </CardItem>
           </Card>

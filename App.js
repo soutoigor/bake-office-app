@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { Router, Scene } from 'react-native-router-flux';
 import Home from './src/screens/Home'
@@ -6,8 +6,24 @@ import WishList from './src/screens/WishList'
 import ReceiptList from './src/screens/ReceiptList'
 import Receipt from './src/screens/Receipt'
 import RegisterReceipt from './src/screens/RegisterReceipt';
+import ApiKeys from './src/constants/ApiKeys.js'
+import * as firebase from 'firebase'
+import * as Font from 'expo-font'
 
-export default function App() {
+export default class App extends Component {
+  constructor(props) {
+    super(props)
+    if (!firebase.apps.length) firebase.initializeApp(ApiKeys.firebaseConfig)
+  }
+
+  async componentDidMount() {
+    await Font.loadAsync({
+      'Cookie': require('./assets/fonts/Cookie-Regular.ttf'),
+    })
+  }
+
+  render() {
+
   return (
     <Router>
       <Scene key="root">
@@ -31,7 +47,7 @@ export default function App() {
         <Scene
           key="registerReceipt"
           component={ RegisterReceipt }
-          title="RegisterReceipt"
+          title="Criar receita"
         />
         <Scene
           key="receipt"
@@ -41,5 +57,7 @@ export default function App() {
       </Scene>
     </Router>
   )
+}
+
 }
 
