@@ -7,9 +7,6 @@ const WishList = () => {
   return (
     <Container>
       <Content>
-          <Text>
-            WishList Screen
-          </Text>
           <ListReceips wasMade="wish" />
         </Content>
     </Container>
