@@ -4,7 +4,7 @@ import { Router, Scene } from 'react-native-router-flux';
 import Home from './src/screens/Home'
 import WishList from './src/screens/WishList'
 import ReceiptList from './src/screens/ReceiptList'
-import Receipt from './src/screens/Receipt'
+import Receip from './src/screens/Receip'
 import RegisterReceipt from './src/screens/RegisterReceipt';
 import ApiKeys from './src/constants/ApiKeys.js'
 import * as firebase from 'firebase'
@@ -42,7 +42,7 @@ export default class App extends Component {
         <Scene
           key="receiptList"
           component={ ReceiptList }
-          title="ReceiptList"
+          title="Receitas Feitas"
         />
         <Scene
           key="registerReceipt"
@@ -50,9 +50,10 @@ export default class App extends Component {
           title="Criar receita"
         />
         <Scene
-          key="receipt"
-          component={ Receipt }
-          title="Receipt"
+          key="receip"
+          component={ Receip }
+          title="Receip"
+          hideNavBar={ true }
         />
       </Scene>
     </Router>

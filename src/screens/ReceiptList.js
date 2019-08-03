@@ -1,21 +1,27 @@
 import React, { Component } from 'react'
 import { StyleSheet } from 'react-native'
-import { Container, Content, Button, Text } from 'native-base'
+import { 
+  Container, 
+  Header, 
+  Left, 
+  Body, 
+  Right, 
+  Button, 
+  Icon, 
+  Title, 
+  Segment, 
+  Content, 
+  Text 
+} from 'native-base';
+
 import { Actions } from 'react-native-router-flux'
+import ListReceips from '../components/ListReceips'
 
 const ReceiptList = () => {
   return (
     <Container>
       <Content>
-          <Text>
-            ReceiptList Screen
-          </Text>
-          <Button
-            full 
-            onPress={ () => Actions.receipt() }
-          >
-            <Text>Receita</Text>
-          </Button>
+          <ListReceips wasMade="made" />
         </Content>
     </Container>
   )

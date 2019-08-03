@@ -60,13 +60,9 @@ export default class RegisterReceipt extends Component {
     }
   }
 
-  
-
   toggleSwitch = (value) => {
     this.setState({ receipHasBeenMade: value })
   }
-
-  
 
   clearFields() {
     this.setState({ receipName: '' })
@@ -204,6 +200,7 @@ export default class RegisterReceipt extends Component {
             >
               <Label>Adicionar ingrediente</Label>
               <Input
+                returnKeyType = {"done"}
                 onEndEditing={ addIngredient }
                 onChangeText={newIngredient => this.setState({newIngredient})}
                 value={ this.state.newIngredient }
@@ -244,6 +241,7 @@ export default class RegisterReceipt extends Component {
             >
               <Label>Adicionar passo</Label>
               <Input
+                returnKeyType = {"done"}
                 onEndEditing={ addDirection }
                 onChangeText={newDirection => this.setState({newDirection})}
                 value={ this.state.newDirection }
