@@ -37,7 +37,7 @@ export default class App extends Component {
         <Scene
           key="wishlist"
           component={ WishList }
-          title="Wishlist"
+          title="Futuras receitas"
         />
         <Scene
           key="receiptList"
@@ -52,8 +52,7 @@ export default class App extends Component {
         <Scene
           key="receip"
           component={ Receip }
-          title="Receip"
-          hideNavBar={ true }
+          
         />
       </Scene>
     </Router>
