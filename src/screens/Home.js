@@ -88,7 +88,7 @@ const Home = () => {
               button
               rounded
               style={ HomeStyle.cardItem }
-              onPress={ () => Actions.registerReceipt() }
+              onPress={ () => Actions.saveReceip() }
             >
                 <Body
                   style={ HomeStyle.cardContent }

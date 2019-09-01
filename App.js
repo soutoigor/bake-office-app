@@ -5,7 +5,7 @@ import Home from './src/screens/Home'
 import WishList from './src/screens/WishList'
 import ReceiptList from './src/screens/ReceiptList'
 import Receip from './src/screens/Receip'
-import RegisterReceipt from './src/screens/RegisterReceipt';
+import SaveReceip from './src/screens/SaveReceip';
 import ApiKeys from './src/constants/ApiKeys.js'
 import * as firebase from 'firebase'
 import * as Font from 'expo-font'
@@ -45,9 +45,9 @@ export default class App extends Component {
           title="Receitas Feitas"
         />
         <Scene
-          key="registerReceipt"
-          component={ RegisterReceipt }
-          title="Criar receita"
+          key="saveReceip"
+          component={ SaveReceip }
+          title="Salvar receita"
         />
         <Scene
           key="receip"
