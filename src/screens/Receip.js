@@ -146,7 +146,7 @@ export default class Receip extends Component {
             <Button 
               info
               block
-              onPress={ () => Actions.registerReceipt({ receipToEdit: selectedReceip }) }
+              onPress={ () => Actions.saveReceip({ receipToEdit: selectedReceip }) }
             >
               <Text>Editar</Text>
             </Button>

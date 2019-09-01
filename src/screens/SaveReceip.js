@@ -4,6 +4,7 @@ import {
   Dimensions,
   FlatList,
   Alert,
+  Modal,
 } from 'react-native'
 import { 
   Container, 
@@ -23,12 +24,16 @@ import {
 } from 'native-base'
 import moment from 'moment'
 import * as firebase from 'firebase'
+import { Actions } from 'react-native-router-flux'
+import { includes } from 'ramda'
 
 const window = Dimensions.get('window')
 export default class RegisterReceipt extends Component {
   constructor(props) {
     super(props)
-    this.state = { 
+    this.state = {
+      itemToEdit: null,
+      modalVisible: false,
       receipName: '',
       ingredients: [],
       newIngredient: '',
@@ -77,6 +82,34 @@ export default class RegisterReceipt extends Component {
   }
   
   _keyExtractor = item => item
+
+  fillFields(receip) {
+    this.setState({ receipName: receip.name })
+    this.setState({ ingredients: receip.ingredients })
+    this.setState({ duration: receip.duration })
+    this.setState({ directions: receip.directions })
+    this.setState({ portions: receip.portions })
+    this.setState({ madeAt: receip.madeAt })
+    this.setState({ receipHasBeenMade: receip.madeAt ? true : false })
+    this.setState({ receipType: receip.receipType })
+    this.setState({ cookies: this.state.cookies.map((cooker) => {
+        delete cooker.checked
+        return {
+          ...cooker,
+          checked:  includes({ id: cooker.id, name: cooker.name }, receip.madeBy) ? true : false,
+        }
+      })
+    })
+  }
+  
+  componentWillMount() {
+    if (this.props.receipToEdit) this.fillFields(this.props.receipToEdit)
+  }
+
+  componentWillUnmount() {
+    delete this.props.receipToEdit
+  }
+
   
   render() {
     const addIngredient = () => {
@@ -110,7 +143,7 @@ export default class RegisterReceipt extends Component {
       return logErrors
     }
 
-    const createReceip = async () => {
+    const saveReceip = async () => {
       const receip = {
         name: this.state.receipName,
         ingredients: this.state.ingredients,
@@ -140,14 +173,23 @@ export default class RegisterReceipt extends Component {
         Alert.alert('Campos inválidos', errorMessage)
         return
       }
-
-      firebase.database().ref('receips/').push(receip)
-        .then(() => {
-          Alert.alert('Receita criada com sucesso! :)')
-          this.clearFields()
+      if (!this.props.receipToEdit) {
+        return firebase.database().ref('receips/').push(receip)
+          .then(() => {
+            Alert.alert('Receita criada com sucesso! :)')
+            this.clearFields()
+          })
+          .catch((err) => {
+            Alert.alert('Falha ao criar receita :c')
+          })
+      }
+      firebase.database().ref(`receips/${this.props.receipToEdit.object_key}`).set(receip)
+        .then(() =>{
+          Alert.alert('Receita editada com sucesso! :)')
+          Actions.receip({ selectedReceip: receip })          
         })
         .catch((err) => {
-          Alert.alert('Falha ao criar receita :c')
+          console.log(err)
         })
     }
     
@@ -158,11 +200,35 @@ export default class RegisterReceipt extends Component {
         <Content
           style={{ width: window.width }}
         >
+          <Modal
+            animationType="slide"
+            transparent={ false }
+            visible={ this.state.modalVisible }
+          >
+            <View style={ Styles.modalContainer }>
+              <View>
+                <Text>Editar item</Text>
+              </View>
+              <View>
+                <Input
+                  onChangeText={itemToEdit => this.setState({ itemToEdit })}
+                  value={ this.state.itemToEdit } 
+                />
+              </View>
+            </View>
+            <View>
+              <Button
+                onPress={ () => this.setState({ modalVisible: false }) }
+              >
+                <Text>Fechar</Text>
+              </Button>
+            </View>
+          </Modal>
           <Form>
             <Text style={ Styles.title }>Nome da receita</Text>
             <Item underline>
               <Input
-                onChangeText={receipName => this.setState({receipName})}
+                onChangeText={receipName => this.setState({ receipName })}
                 value={ this.state.receipName } 
               />
             </Item>
@@ -175,10 +241,22 @@ export default class RegisterReceipt extends Component {
                 return (
                   <ListItem
                     style={ Styles.listItems }
-                  >
+                    >
                     <SwipeRow
                       style={{ width: '100%' }}
                       rightOpenValue={-90}
+                      leftOpenValue={90}
+                      left={ 
+                        <Button 
+                          info 
+                          onPress={ () => {
+                            this.setState({ modalVisible: true })
+                            this.setState({ itemToEdit: item })
+                          } }
+                        >
+                          <Icon active name="settings" />
+                        </Button>
+                       }
                       body={
                         <View>
                           <Text>{ item }</Text>
@@ -216,6 +294,7 @@ export default class RegisterReceipt extends Component {
                   return (
                     <ListItem
                       style={ Styles.listItems }
+                      onPress={ () => this.setState({ modalVisible: true }) }
                     >
                       <SwipeRow 
                         style={{ width: '100%' }}
@@ -243,7 +322,7 @@ export default class RegisterReceipt extends Component {
               <Input
                 returnKeyType = {"done"}
                 onEndEditing={ addDirection }
-                onChangeText={newDirection => this.setState({newDirection})}
+                onChangeText={ newDirection => this.setState({newDirection}) }
                 value={ this.state.newDirection }
               />
             </Item>
@@ -255,7 +334,7 @@ export default class RegisterReceipt extends Component {
             >
             <Label>Tempo em minutos</Label>
               <Input
-                onChangeText={duration => this.setState({duration})}
+                onChangeText={ duration => this.setState({duration}) }
                 value={ this.state.duration }
                 keyboardType={'numeric'}
                 />
@@ -339,14 +418,19 @@ export default class RegisterReceipt extends Component {
                 />
               </View>
             </View>
-
-            <Button 
-              block
-              onPress={ createReceip }
-              success
-            >
-              <Text>Criar receita</Text>
-            </Button>
+              <Button 
+                block
+                onPress={ saveReceip }
+                success
+              >
+                <Text>
+                  { 
+                    this.props.receipToEdit 
+                    ? 'Editar receita' 
+                    : 'Criar receita' 
+                  }
+                </Text>
+              </Button>
           </Form>
         </Content>
       </Container>
@@ -385,5 +469,9 @@ const Styles = StyleSheet.create({
     width: window.width,  
     paddingBottom: 0, 
     marginBottom: 0,
-  },                                                                                                                                                                                                   
+  },
+  modalContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },                                                                                                                                                                                              
 })
