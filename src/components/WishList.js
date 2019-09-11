@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
-import { StyleSheet } from 'react-native'
+import React from 'react'
 import { Container, Content, Text } from 'native-base'
-import ListReceips from '../components/ListReceips'
+import ListReceips from './ListReceips'
 
 const WishList = () => {
   return (

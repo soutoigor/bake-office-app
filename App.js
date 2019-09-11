@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
-import { Router, Scene } from 'react-native-router-flux';
-import Home from './src/screens/Home'
-import WishList from './src/screens/WishList'
-import ReceiptList from './src/screens/ReceiptList'
-import Receip from './src/screens/Receip'
-import SaveReceip from './src/screens/SaveReceip';
+import React, { Component } from 'react'
+import { Router, Scene } from 'react-native-router-flux'
+import Home from './src/components/Home'
+import WishList from './src/components/WishList'
+import ReceipList from './src/components/ReceipList'
+import Receip from './src/components/Receip'
+import SaveReceip from './src/components/SaveReceip'
 import ApiKeys from './src/constants/ApiKeys.js'
 import * as firebase from 'firebase'
 import * as Font from 'expo-font'
@@ -40,8 +39,8 @@ export default class App extends Component {
           title="Futuras receitas"
         />
         <Scene
-          key="receiptList"
-          component={ ReceiptList }
+          key="receipList"
+          component={ ReceipList }
           title="Receitas Feitas"
         />
         <Scene

@@ -1,11 +1,20 @@
+import {
+  API_KEY,
+  AUTH_DOMAIN,
+  DATABASE_URL,
+  PROJECT_ID,
+  MESSAGE_SENDER_ID,
+  APP_ID
+} from 'react-native-dotenv'
+
 export default {
   firebaseConfig: {
-    apiKey: "AIzaSyDO95As-75r5qK2RLjbv6xx9vHeZUcPafE",
-    authDomain: "bake-office.firebaseapp.com",
-    databaseURL: "https://bake-office.firebaseio.com",
-    projectId: "bake-office",
-    storageBucket: "bake-office.appspot.com",
-    messagingSenderId: "479154046154",
-    appId: "1:479154046154:web:945008389234c10e"
+    apiKey: API_KEY,
+    authDomain: AUTH_DOMAIN,
+    databaseURL: DATABASE_URL,
+    projectId: PROJECT_ID,
+    storageBucket: "",
+    messagingSenderId: MESSAGE_SENDER_ID,
+    appId: APP_ID
   },
 }

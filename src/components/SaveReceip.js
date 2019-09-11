@@ -4,7 +4,6 @@ import {
   Dimensions,
   FlatList,
   Alert,
-  Modal,
 } from 'react-native'
 import { 
   Container, 
@@ -28,12 +27,11 @@ import { Actions } from 'react-native-router-flux'
 import { includes } from 'ramda'
 
 const window = Dimensions.get('window')
-export default class RegisterReceipt extends Component {
+export default class SaveReceip extends Component {
   constructor(props) {
     super(props)
     this.state = {
       itemToEdit: null,
-      modalVisible: false,
       receipName: '',
       ingredients: [],
       newIngredient: '',
@@ -200,30 +198,6 @@ export default class RegisterReceipt extends Component {
         <Content
           style={{ width: window.width }}
         >
-          <Modal
-            animationType="slide"
-            transparent={ false }
-            visible={ this.state.modalVisible }
-          >
-            <View style={ Styles.modalContainer }>
-              <View>
-                <Text>Editar item</Text>
-              </View>
-              <View>
-                <Input
-                  onChangeText={itemToEdit => this.setState({ itemToEdit })}
-                  value={ this.state.itemToEdit } 
-                />
-              </View>
-            </View>
-            <View>
-              <Button
-                onPress={ () => this.setState({ modalVisible: false }) }
-              >
-                <Text>Fechar</Text>
-              </Button>
-            </View>
-          </Modal>
           <Form>
             <Text style={ Styles.title }>Nome da receita</Text>
             <Item underline>
@@ -245,18 +219,6 @@ export default class RegisterReceipt extends Component {
                     <SwipeRow
                       style={{ width: '100%' }}
                       rightOpenValue={-90}
-                      leftOpenValue={90}
-                      left={ 
-                        <Button 
-                          info 
-                          onPress={ () => {
-                            this.setState({ modalVisible: true })
-                            this.setState({ itemToEdit: item })
-                          } }
-                        >
-                          <Icon active name="settings" />
-                        </Button>
-                       }
                       body={
                         <View>
                           <Text>{ item }</Text>
@@ -294,7 +256,6 @@ export default class RegisterReceipt extends Component {
                   return (
                     <ListItem
                       style={ Styles.listItems }
-                      onPress={ () => this.setState({ modalVisible: true }) }
                     >
                       <SwipeRow 
                         style={{ width: '100%' }}

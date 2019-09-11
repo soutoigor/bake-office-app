@@ -26,7 +26,7 @@ export default class Receip extends Component {
     try { 
       await firebase.database().ref(`receips/${id}`).remove()
       Alert.alert('Receita excluída com sucesso.')
-      Actions.receiptList()
+      Actions.receipList()
     } catch(err) {
       Alert.alert('Erro ao excluir')
     }
