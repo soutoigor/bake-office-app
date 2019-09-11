@@ -3,7 +3,6 @@ import {
   StyleSheet, 
   Dimensions,
   FlatList,
-  Alert,
   Image,
 } from 'react-native'
 import { 
@@ -18,7 +17,6 @@ import {
   Spinner,
 } from 'native-base'
 import { Actions } from 'react-native-router-flux'
-import moment from 'moment'
 import * as firebase from 'firebase'
 import { O2A } from 'object-to-array-convert'
 

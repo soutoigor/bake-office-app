@@ -50,7 +50,7 @@ const Home = () => {
               button
               rounded
               style={ HomeStyle.cardItem }
-              onPress={ () => Actions.receiptList() }
+              onPress={ () => Actions.receipList() }
               >
                 <Body
                   style={ HomeStyle.cardContent }
