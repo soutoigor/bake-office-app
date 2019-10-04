@@ -1,4 +1,20 @@
 {
+  "name": "Bake Office",
+  "version": "1.0.0",
+  "author": {
+    "name": "Igor Souto de Souza",
+    "email": "igor_souto@outlook.com",
+    "url": "https://www.linkedin.com/in/igor-souto/"
+  },
+  "keywords": [
+    "receip",
+    "food",
+    "react native",
+    "expo",
+    "native base"
+  ],
+  "description": "A React Native app to save receips.",
+  "repository": "https://github.com/soutoigor/bake-office-app",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
